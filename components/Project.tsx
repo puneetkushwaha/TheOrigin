@@ -76,7 +76,6 @@ export default function Projects() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   
-  // ✅ Mobile Detection
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -88,61 +87,92 @@ export default function Projects() {
 
   return (
     <section 
+      id="projects"  // ✅ ADDED: for smooth scroll from Hero
       ref={ref} 
-      className="relative min-h-screen w-full py-20 px-4 overflow-hidden"
+      className="relative min-h-screen w-full py-12 sm:py-16 md:py-20 px-4 overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
       }}
     >
-      {/* ✅ FIXED: Animated Background Orbs - NOW RESPONSIVE */}
-      <motion.div 
-        className="absolute top-1/4 right-10"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.04, 0.06, 0.04],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          width: isMobile ? '300px' : '600px',
-          height: isMobile ? '300px' : '600px',
-          background: 'radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%)',
-          filter: 'blur(100px)',
-          pointerEvents: 'none',
-        }}
-      />
-      <motion.div 
-        className="absolute bottom-1/4 left-10"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.06, 0.04, 0.06],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          width: isMobile ? '300px' : '600px',
-          height: isMobile ? '300px' : '600px',
-          background: 'radial-gradient(circle, rgba(155, 93, 229, 0.04) 0%, transparent 70%)',
-          filter: 'blur(100px)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* ✅ OPTIMIZED: Animated Background Orbs - Reduced on mobile, no animation on mobile */}
+      {!isMobile ? (
+        <>
+          <motion.div 
+            className="absolute top-1/4 right-10"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.04, 0.06, 0.04],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{
+              width: '600px',
+              height: '600px',
+              background: 'radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%)',
+              filter: 'blur(100px)',
+              pointerEvents: 'none',
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 left-10"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.06, 0.04, 0.06],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{
+              width: '600px',
+              height: '600px',
+              background: 'radial-gradient(circle, rgba(155, 93, 229, 0.04) 0%, transparent 70%)',
+              filter: 'blur(100px)',
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      ) : (
+        // ✅ Static orbs on mobile (no animation)
+        <>
+          <div 
+            className="absolute top-1/4 right-5"
+            style={{
+              width: '200px',
+              height: '200px',
+              background: 'radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%)',
+              filter: 'blur(50px)',
+              pointerEvents: 'none',
+            }}
+          />
+          <div 
+            className="absolute bottom-1/4 left-5"
+            style={{
+              width: '200px',
+              height: '200px',
+              background: 'radial-gradient(circle, rgba(155, 93, 229, 0.04) 0%, transparent 70%)',
+              filter: 'blur(50px)',
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      )}
 
-      {/* Minimal Grid */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          opacity: 0.02,
-          backgroundImage: `linear-gradient(rgba(0, 229, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.5) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
-      />
+      {/* ✅ OPTIMIZED: Minimal Grid - Hidden on mobile */}
+      {!isMobile && (
+        <div 
+          className="absolute inset-0"
+          style={{
+            opacity: 0.02,
+            backgroundImage: `linear-gradient(rgba(0, 229, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.5) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+      )}
 
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section Header */}
@@ -150,22 +180,23 @@ export default function Projects() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-20 text-center"
+          className="mb-12 sm:mb-16 md:mb-20 text-center"
         >
+          {/* ✅ OPTIMIZED: Title animation disabled on mobile */}
           <motion.h2 
-            className="mb-4 font-bold text-5xl md:text-6xl lg:text-7xl tracking-tight"
-            animate={{
+            className="mb-4 font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight px-4"
+            animate={!isMobile ? {
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-            }}
-            transition={{
+            } : {}}
+            transition={!isMobile ? {
               duration: 5,
               repeat: Infinity,
               ease: "linear"
-            }}
+            } : {}}
             style={{
               fontFamily: 'Orbitron, sans-serif',
               background: 'linear-gradient(90deg, #ffffff 0%, #00e5ff 25%, #c084fc 50%, #00e5ff 75%, #ffffff 100%)',
-              backgroundSize: '200% auto',
+              backgroundSize: isMobile ? '100% auto' : '200% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -174,23 +205,26 @@ export default function Projects() {
           >
             Our Projects
           </motion.h2>
+          
+          {/* ✅ OPTIMIZED: Divider animation disabled on mobile */}
           <motion.div 
-            className="mx-auto h-px w-24"
-            animate={{
+            className="mx-auto h-px w-16 sm:w-20 md:w-24"
+            animate={!isMobile ? {
               width: ['96px', '128px', '96px'],
               opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
+            } : {}}
+            transition={!isMobile ? {
               duration: 3,
               repeat: Infinity,
               ease: "easeInOut"
-            }}
+            } : {}}
             style={{
               background: 'linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.6), transparent)',
             }}
           />
+          
           <p 
-            className="mt-6 text-lg md:text-xl"
+            className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl px-4"
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               color: '#a0a0a0',
@@ -201,8 +235,8 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* ✅ OPTIMIZED: Projects Grid */}
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -213,21 +247,21 @@ export default function Projects() {
                 delay: index * 0.08,
                 ease: [0.22, 1, 0.36, 1]
               }}
-              whileHover={{ 
+              whileHover={!isMobile ? {  // ✅ DISABLED hover on mobile
                 y: -8,
                 scale: 1.02,
-              }}
-              onHoverStart={() => setHoveredProject(project.id)}
-              onHoverEnd={() => setHoveredProject(null)}
+              } : {}}
+              onHoverStart={() => !isMobile && setHoveredProject(project.id)}  // ✅ DISABLED on mobile
+              onHoverEnd={() => !isMobile && setHoveredProject(null)}
               className="group cursor-pointer"
             >
               <div
-                className="relative h-full overflow-hidden rounded-2xl p-6 transition-all duration-500 ease-out"
+                className="relative h-full overflow-hidden rounded-2xl p-5 sm:p-6 transition-all duration-500 ease-out"
                 style={{
                   background: hoveredProject === project.id
                     ? 'rgba(25, 25, 35, 0.6)'
                     : 'rgba(20, 20, 30, 0.4)',
-                  backdropFilter: 'blur(20px)',
+                  backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
                   border: hoveredProject === project.id
                     ? `1px solid ${project.color}30`
                     : '1px solid rgba(255, 255, 255, 0.05)',
@@ -236,40 +270,44 @@ export default function Projects() {
                     : '0 4px 16px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                {/* Animated Gradient Background */}
-                <motion.div
-                  className="absolute inset-0"
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: hoveredProject === project.id ? 1 : 0,
-                  }}
-                  transition={{ duration: 0.4 }}
-                  style={{
-                    background: `radial-gradient(circle at 50% 0%, ${project.color}08, transparent 70%)`,
-                  }}
-                />
+                {/* ✅ REMOVED: Animated Gradient Background on mobile */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                      opacity: hoveredProject === project.id ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      background: `radial-gradient(circle at 50% 0%, ${project.color}08, transparent 70%)`,
+                    }}
+                  />
+                )}
 
-                {/* Shimmer Effect */}
-                <motion.div
-                  className="absolute inset-0 opacity-0"
-                  animate={{
-                    opacity: hoveredProject === project.id ? [0, 0.5, 0] : 0,
-                    x: hoveredProject === project.id ? ['-100%', '200%'] : '-100%',
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: hoveredProject === project.id ? Infinity : 0,
-                    repeatDelay: 1,
-                  }}
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
-                  }}
-                />
+                {/* ✅ REMOVED: Shimmer Effect on mobile */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute inset-0 opacity-0"
+                    animate={{
+                      opacity: hoveredProject === project.id ? [0, 0.5, 0] : 0,
+                      x: hoveredProject === project.id ? ['-100%', '200%'] : '-100%',
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: hoveredProject === project.id ? Infinity : 0,
+                      repeatDelay: 1,
+                    }}
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+                    }}
+                  />
+                )}
 
                 <div className="relative z-10 flex h-full flex-col">
-                  {/* ✅ ICON - HOVER EFFECT REMOVED (NO ANIMATION) */}
+                  {/* Icon */}
                   <div 
-                    className="mb-5 text-5xl"
+                    className="mb-4 sm:mb-5 text-4xl sm:text-5xl"
                     style={{
                       filter: hoveredProject === project.id 
                         ? `drop-shadow(0 0 16px ${project.color}60)` 
@@ -282,7 +320,7 @@ export default function Projects() {
 
                   {/* Title */}
                   <motion.h3
-                    className="mb-3 text-xl font-semibold transition-colors duration-300"
+                    className="mb-2 sm:mb-3 text-lg sm:text-xl font-semibold transition-colors duration-300"
                     animate={{
                       color: hoveredProject === project.id ? project.color : '#ffffff',
                     }}
@@ -295,7 +333,7 @@ export default function Projects() {
 
                   {/* Description */}
                   <p 
-                    className="mb-5 flex-grow text-sm leading-relaxed transition-colors duration-300"
+                    className="mb-4 sm:mb-5 flex-grow text-xs sm:text-sm leading-relaxed transition-colors duration-300"
                     style={{
                       fontFamily: 'system-ui, -apple-system, sans-serif',
                       color: hoveredProject === project.id ? '#c8c8c8' : '#b0b0b0',
@@ -316,8 +354,8 @@ export default function Projects() {
                           duration: 0.3, 
                           delay: index * 0.08 + tagIndex * 0.05 
                         }}
-                        whileHover={{ scale: 1.05 }}
-                        className="rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-300"
+                        whileHover={!isMobile ? { scale: 1.05 } : {}}  // ✅ DISABLED on mobile
+                        className="rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-medium transition-all duration-300"
                         style={{ 
                           fontFamily: 'system-ui, -apple-system, sans-serif',
                           background: hoveredProject === project.id
@@ -335,30 +373,34 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Bottom Accent Line */}
-                <motion.div
-                  className="absolute bottom-0 left-0 h-1"
-                  initial={{ width: '0%' }}
-                  animate={{
-                    width: hoveredProject === project.id ? '100%' : '0%',
-                  }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
-                    boxShadow: hoveredProject === project.id ? `0 0 12px ${project.color}60` : 'none',
-                  }}
-                />
+                {/* ✅ REMOVED: Bottom Accent Line on mobile */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-1"
+                    initial={{ width: '0%' }}
+                    animate={{
+                      width: hoveredProject === project.id ? '100%' : '0%',
+                    }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
+                      boxShadow: hoveredProject === project.id ? `0 0 12px ${project.color}60` : 'none',
+                    }}
+                  />
+                )}
 
-                {/* Corner Accent */}
-                <motion.div
-                  className="absolute top-0 right-0 w-20 h-20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: hoveredProject === project.id ? 0.1 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    background: `radial-gradient(circle at 100% 0%, ${project.color}, transparent 70%)`,
-                  }}
-                />
+                {/* ✅ REMOVED: Corner Accent on mobile */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute top-0 right-0 w-20 h-20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredProject === project.id ? 0.1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      background: `radial-gradient(circle at 100% 0%, ${project.color}, transparent 70%)`,
+                    }}
+                  />
+                )}
               </div>
             </motion.div>
           ))}
@@ -369,10 +411,10 @@ export default function Projects() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-20 text-center"
+          className="mt-12 sm:mt-16 md:mt-20 text-center"
         >
           <p 
-            className="mb-8 text-base max-w-2xl mx-auto"
+            className="mb-6 sm:mb-8 text-sm sm:text-base max-w-2xl mx-auto px-4"
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               color: '#909090',
@@ -383,49 +425,52 @@ export default function Projects() {
             Every project operates autonomously, pushing the boundaries of what AI can achieve
           </p>
           <motion.button
-            whileHover={{ 
+            whileHover={!isMobile ? {  // ✅ DISABLED on mobile
               y: -3, 
               scale: 1.02,
-            }}
+            } : {}}
             whileTap={{ scale: 0.98 }}
-            className="group relative px-10 py-4 rounded-xl text-sm font-semibold uppercase tracking-widest transition-all duration-300 overflow-hidden"
+            className="group relative px-8 sm:px-10 py-3 sm:py-4 rounded-xl text-xs sm:text-sm font-semibold uppercase tracking-widest transition-all duration-300 overflow-hidden"
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               background: 'linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(155, 93, 229, 0.1) 100%)',
-              backdropFilter: 'blur(20px)',
+              backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
               border: '1px solid rgba(0, 229, 255, 0.3)',
               color: '#ffffff',
               boxShadow: '0 4px 24px rgba(0, 229, 255, 0.15)',
               letterSpacing: '0.15em',
             }}
           >
-            {/* Button shimmer */}
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100"
-              animate={{
-                x: ['-100%', '200%'],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatDelay: 1,
-              }}
-              style={{
-                background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
-              }}
-            />
-            
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              Explore All Projects
-              <motion.span
+            {/* ✅ REMOVED: Button shimmer on mobile */}
+            {!isMobile && (
+              <motion.div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100"
                 animate={{
-                  x: [0, 4, 0],
+                  x: ['-100%', '200%'],
                 }}
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  repeatDelay: 1,
                 }}
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+                }}
+              />
+            )}
+            
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Explore All Projects
+              {/* ✅ OPTIMIZED: Arrow animation - simpler on mobile */}
+              <motion.span
+                animate={!isMobile ? {
+                  x: [0, 4, 0],
+                } : {}}
+                transition={!isMobile ? {
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                } : {}}
               >
                 →
               </motion.span>
@@ -434,7 +479,7 @@ export default function Projects() {
         </motion.div>
       </div>
 
-      {/* Styles */}
+      {/* ✅ OPTIMIZED: Styles - Only for desktop */}
       <style jsx>{`
         @media (prefers-reduced-motion: reduce) {
           * {
@@ -444,23 +489,13 @@ export default function Projects() {
           }
         }
 
+        ${!isMobile ? `
         button:hover {
           background: linear-gradient(135deg, rgba(0, 229, 255, 0.15) 0%, rgba(155, 93, 229, 0.15) 100%) !important;
           border-color: rgba(0, 229, 255, 0.5) !important;
           box-shadow: 0 8px 40px rgba(0, 229, 255, 0.25), 0 0 0 1px rgba(0, 229, 255, 0.2) !important;
         }
-
-        @media (max-width: 768px) {
-          h2 {
-            font-size: 2.5rem !important;
-          }
-        }
-
-        @media (max-width: 1024px) {
-          .lg\\:grid-cols-4 {
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-          }
-        }
+        ` : ''}
       `}</style>
     </section>
   );

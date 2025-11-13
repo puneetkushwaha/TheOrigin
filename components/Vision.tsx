@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Sphere, MeshTransmissionMaterial, OrbitControls, Environment, Text } from '@react-three/drei';
+import { Sphere, MeshTransmissionMaterial, OrbitControls, Text } from '@react-three/drei';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 
@@ -20,23 +20,24 @@ interface ResponsiveCameraProps {
   isTablet: boolean;
 }
 
-// Elegant Glass Sphere for Vision
+// ✅ OPTIMIZED: Elegant Glass Sphere for Vision
 function VisionSphere({ isMobile }: VisionSphereProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   
   useFrame((state: any) => {
-  if (meshRef.current) {
-    meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.2;
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.2;
     }
   });
 
   const sphereSize = isMobile ? 0.9 : 1.2;
 
   return (
-    <Sphere ref={meshRef} args={[sphereSize, isMobile ? 64 : 128, isMobile ? 64 : 128]}>
+    // ✅ REDUCED: segments from 64/128 to 24/32
+    <Sphere ref={meshRef} args={[sphereSize, isMobile ? 24 : 32, isMobile ? 24 : 32]}>
       <MeshTransmissionMaterial
         backside
-        samples={isMobile ? 6 : 16}
+        samples={isMobile ? 2 : 4}           // ✅ REDUCED: from 6/16 to 2/4
         resolution={isMobile ? 256 : 512}
         transmission={1}
         roughness={0.1}
@@ -53,13 +54,13 @@ function VisionSphere({ isMobile }: VisionSphereProps) {
   );
 }
 
-// Orbiting Core Values
+// ✅ OPTIMIZED: Orbiting Core Values
 function OrbitingValues({ isMobile }: OrbitingValuesProps) {
   const groupRef = useRef<THREE.Group>(null);
   
   useFrame((state: any) => {
-  if (groupRef.current) {
-    groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
 
@@ -89,13 +90,13 @@ function OrbitingValues({ isMobile }: OrbitingValuesProps) {
               color="#ffffff"
               anchorX="center"
               anchorY="middle"
-              outlineWidth={0.02}
+              outlineWidth={0.01}               // ✅ REDUCED: from 0.02
               outlineColor="#000000"
             >
               {value.label}
             </Text>
 
-            {/* Connecting Line to Sphere - Hidden on mobile for performance */}
+            {/* Connecting Line - Hidden on mobile */}
             {!isMobile && (
               <mesh position={[0, 0, 0]} rotation={[0, -value.angle, 0]}>
                 <boxGeometry args={[0.02, 0.02, radius * 0.6]} />
@@ -107,9 +108,9 @@ function OrbitingValues({ isMobile }: OrbitingValuesProps) {
               </mesh>
             )}
 
-            {/* Glowing Orb */}
+            {/* ✅ OPTIMIZED: Glowing Orb */}
             <mesh position={[0, 0, 0]}>
-              <sphereGeometry args={[orbSize, 16, 16]} />
+              <sphereGeometry args={[orbSize, 8, 8]} />  {/* ✅ REDUCED: from 16 to 8 */}
               <meshStandardMaterial
                 color="#00e5ff"
                 emissive="#00e5ff"
@@ -123,12 +124,11 @@ function OrbitingValues({ isMobile }: OrbitingValuesProps) {
   );
 }
 
-// Responsive Camera Component - FIXED
+// Responsive Camera Component
 function ResponsiveCamera({ isMobile, isTablet }: ResponsiveCameraProps) {
   const { camera } = useThree();
   
   useEffect(() => {
-    // Check if camera is PerspectiveCamera before setting fov
     const isPerspectiveCamera = 'fov' in camera;
     
     if (isMobile) {
@@ -178,14 +178,14 @@ export default function Vision() {
         background: 'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
       }}
     >
-      {/* Subtle Background Orb */}
+      {/* ✅ OPTIMIZED: Subtle Background Orb - Reduced blur on mobile */}
       <div 
         className="absolute top-1/4 left-1/2 -translate-x-1/2"
         style={{
-          width: isMobile ? '300px' : '600px',
-          height: isMobile ? '300px' : '600px',
+          width: isMobile ? '250px' : '600px',
+          height: isMobile ? '250px' : '600px',
           background: 'radial-gradient(circle, rgba(192, 132, 252, 0.06) 0%, transparent 70%)',
-          filter: 'blur(100px)',
+          filter: isMobile ? 'blur(50px)' : 'blur(100px)',  // ✅ REDUCED on mobile
           pointerEvents: 'none',
         }}
       />
@@ -233,46 +233,51 @@ export default function Vision() {
                 height: isMobile ? '380px' : isTablet ? '450px' : '500px',
               }}
             >
-              {/* Subtle Background Glow */}
+              {/* ✅ OPTIMIZED: Subtle Background Glow - Reduced blur */}
               <div 
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                 style={{
-                  width: isMobile ? '250px' : '400px',
-                  height: isMobile ? '250px' : '400px',
+                  width: isMobile ? '200px' : '400px',
+                  height: isMobile ? '200px' : '400px',
                   background: 'radial-gradient(circle, rgba(192, 132, 252, 0.12) 0%, transparent 70%)',
-                  filter: 'blur(80px)',
+                  filter: isMobile ? 'blur(40px)' : 'blur(80px)',  // ✅ REDUCED on mobile
                 }}
               />
 
-              {/* 3D Canvas */}
+              {/* ✅ OPTIMIZED: 3D Canvas */}
               <Canvas
                 dpr={isMobile ? [1, 1.5] : [1, 2]}
                 performance={{ min: 0.5 }}
+                gl={{
+                  antialias: !isMobile,              // ✅ ADDED: disable AA on mobile
+                  powerPreference: isMobile ? 'low-power' : 'high-performance',  // ✅ ADDED
+                }}
               >
                 <Suspense fallback={null}>
                   <ResponsiveCamera isMobile={isMobile} isTablet={isTablet} />
                   
-                  <ambientLight intensity={isMobile ? 0.4 : 0.3} />
+                  {/* ✅ OPTIMIZED: Reduced lighting intensity */}
+                  <ambientLight intensity={isMobile ? 0.3 : 0.25} />
                   <directionalLight 
                     position={[5, 5, 5]} 
-                    intensity={isMobile ? 0.6 : 0.8} 
+                    intensity={isMobile ? 0.4 : 0.6} 
                     color="#ffffff" 
                   />
                   <pointLight 
                     position={[-5, 0, -5]} 
-                    intensity={isMobile ? 0.3 : 0.5} 
+                    intensity={isMobile ? 0.2 : 0.3} 
                     color="#c084fc" 
                   />
                   <pointLight 
                     position={[0, 0, 0]} 
-                    intensity={isMobile ? 0.6 : 0.8} 
+                    intensity={isMobile ? 0.4 : 0.6} 
                     color="#00e5ff" 
                   />
                   
                   <VisionSphere isMobile={isMobile} />
                   <OrbitingValues isMobile={isMobile} />
                   
-                  {!isMobile && <Environment preset="city" />}
+                  {/* ✅ REMOVED: Environment (heavy performance hit) */}
                   
                   <OrbitControls 
                     enableZoom={false} 
@@ -309,7 +314,7 @@ export default function Vision() {
 
           {/* Right: Vision & Mission Content */}
           <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
-            {/* Vision */}
+            {/* ✅ OPTIMIZED: Vision - Reduced blur on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -317,7 +322,7 @@ export default function Vision() {
               className="rounded-xl p-6 sm:p-8"
               style={{
                 background: 'rgba(20, 20, 30, 0.4)',
-                backdropFilter: 'blur(20px)',
+                backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
                 border: '1px solid rgba(255, 255, 255, 0.05)',
                 boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
               }}
@@ -350,7 +355,7 @@ export default function Vision() {
               </p>
             </motion.div>
 
-            {/* Mission */}
+            {/* ✅ OPTIMIZED: Mission - Reduced blur on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -358,7 +363,7 @@ export default function Vision() {
               className="rounded-xl p-6 sm:p-8"
               style={{
                 background: 'rgba(20, 20, 30, 0.4)',
-                backdropFilter: 'blur(20px)',
+                backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
                 border: '1px solid rgba(192, 132, 252, 0.1)',
                 boxShadow: '0 4px 16px rgba(192, 132, 252, 0.05)',
               }}
