@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="#-live-demo"><strong>🌐 Live Demo</strong></a> •
+  <a href="[#-live-demo](https://the-origin-nu.vercel.app/)"><strong>🌐 Live Demo</strong></a> •
   <a href="#-features"><strong>✨ Features</strong></a> •
   <a href="#-tech-stack"><strong>🛠️ Tech Stack</strong></a> •
   <a href="#-installation"><strong>📦 Installation</strong></a> •
@@ -33,7 +33,7 @@
 
 ## 🌐 Live Demo
 
-> **🔗 Live Website:** [YOUR_LIVE_LINK_HERE](#)
+> **🔗 Live Website:** [[YOUR_LIVE_LINK_HERE](#)](https://the-origin-nu.vercel.app/)
 
 ---
 
