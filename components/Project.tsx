@@ -4,6 +4,16 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
+const featuredProject = {
+  id: 0,
+  title: 'AryaVart',
+  description: "India's first native AI LLM model with complete speech understanding, voice-based interactions, and intelligent task automation. Built for Bharat, powered by indigenous technology.",
+  icon: '🇮🇳',
+  tags: ['Native LLM', 'Voice AI', 'Task Automation', 'Speech Recognition'],
+  color: '#ff6b35',
+  gradient: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%)',
+};
+
 const projects = [
   {
     id: 1,
@@ -87,14 +97,14 @@ export default function Projects() {
 
   return (
     <section 
-      id="projects"  // ✅ ADDED: for smooth scroll from Hero
+      id="projects"
       ref={ref} 
       className="relative min-h-screen w-full py-12 sm:py-16 md:py-20 px-4 overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
       }}
     >
-      {/* ✅ OPTIMIZED: Animated Background Orbs - Reduced on mobile, no animation on mobile */}
+      {/* Animated Background Orbs */}
       {!isMobile ? (
         <>
           <motion.div 
@@ -137,7 +147,6 @@ export default function Projects() {
           />
         </>
       ) : (
-        // ✅ Static orbs on mobile (no animation)
         <>
           <div 
             className="absolute top-1/4 right-5"
@@ -162,7 +171,7 @@ export default function Projects() {
         </>
       )}
 
-      {/* ✅ OPTIMIZED: Minimal Grid - Hidden on mobile */}
+      {/* Minimal Grid */}
       {!isMobile && (
         <div 
           className="absolute inset-0"
@@ -182,7 +191,6 @@ export default function Projects() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 sm:mb-16 md:mb-20 text-center"
         >
-          {/* ✅ OPTIMIZED: Title animation disabled on mobile */}
           <motion.h2 
             className="mb-4 font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight px-4"
             animate={!isMobile ? {
@@ -206,7 +214,6 @@ export default function Projects() {
             Our Projects
           </motion.h2>
           
-          {/* ✅ OPTIMIZED: Divider animation disabled on mobile */}
           <motion.div 
             className="mx-auto h-px w-16 sm:w-20 md:w-24"
             animate={!isMobile ? {
@@ -235,7 +242,212 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* ✅ OPTIMIZED: Projects Grid */}
+        {/* Featured Project - AryaVart */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 sm:mb-12"
+        >
+          <motion.div
+            whileHover={!isMobile ? {
+              y: -8,
+              scale: 1.01,
+            } : {}}
+            onHoverStart={() => !isMobile && setHoveredProject(featuredProject.id)}
+            onHoverEnd={() => !isMobile && setHoveredProject(null)}
+            className="group cursor-pointer"
+          >
+            <div
+              className="relative overflow-hidden rounded-3xl p-8 sm:p-10 md:p-12 transition-all duration-500 ease-out"
+              style={{
+                background: hoveredProject === featuredProject.id
+                  ? 'rgba(30, 25, 20, 0.6)'
+                  : 'rgba(25, 20, 18, 0.5)',
+                backdropFilter: isMobile ? 'blur(15px)' : 'blur(30px)',
+                border: hoveredProject === featuredProject.id
+                  ? `2px solid ${featuredProject.color}40`
+                  : '2px solid rgba(255, 107, 53, 0.15)',
+                boxShadow: hoveredProject === featuredProject.id
+                  ? `0 20px 60px ${featuredProject.color}30, 0 0 0 1px ${featuredProject.color}20`
+                  : '0 8px 32px rgba(0, 0, 0, 0.4)',
+              }}
+            >
+              {/* Animated gradient background */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: hoveredProject === featuredProject.id ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    background: `radial-gradient(circle at 30% 30%, ${featuredProject.color}12, transparent 60%)`,
+                  }}
+                />
+              )}
+
+              {/* Shimmer effect */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute inset-0 opacity-0"
+                  animate={{
+                    opacity: hoveredProject === featuredProject.id ? [0, 0.6, 0] : 0,
+                    x: hoveredProject === featuredProject.id ? ['-100%', '200%'] : '-100%',
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: hoveredProject === featuredProject.id ? Infinity : 0,
+                    repeatDelay: 1.5,
+                  }}
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)',
+                  }}
+                />
+              )}
+
+              <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+                {/* Left side - Content */}
+                <div>
+                  {/* Featured badge */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider"
+                    style={{
+                      background: `${featuredProject.color}20`,
+                      color: featuredProject.color,
+                      border: `1px solid ${featuredProject.color}40`,
+                    }}
+                  >
+                    <span className="text-lg">⭐</span>
+                    Featured Project
+                  </motion.div>
+
+                  {/* Icon */}
+                  <div 
+                    className="mb-6 text-6xl sm:text-7xl"
+                    style={{
+                      filter: hoveredProject === featuredProject.id 
+                        ? `drop-shadow(0 0 24px ${featuredProject.color}80)` 
+                        : `drop-shadow(0 0 12px ${featuredProject.color}40)`,
+                      transition: 'filter 0.3s ease',
+                    }}
+                  >
+                    {featuredProject.icon}
+                  </div>
+
+                  {/* Title */}
+                  <motion.h3
+                    className="mb-4 text-3xl sm:text-4xl md:text-5xl font-bold transition-colors duration-300"
+                    animate={{
+                      color: hoveredProject === featuredProject.id ? featuredProject.color : '#ffffff',
+                    }}
+                    style={{ 
+                      fontFamily: 'Orbitron, sans-serif',
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    {featuredProject.title}
+                  </motion.h3>
+
+                  {/* Description */}
+                  <p 
+                    className="mb-6 text-base sm:text-lg leading-relaxed transition-colors duration-300"
+                    style={{
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      color: hoveredProject === featuredProject.id ? '#e0e0e0' : '#c0c0c0',
+                      fontWeight: 300,
+                    }}
+                  >
+                    {featuredProject.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-3">
+                    {featuredProject.tags.map((tag, tagIndex) => (
+                      <motion.span
+                        key={tag}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ 
+                          duration: 0.3, 
+                          delay: 0.3 + tagIndex * 0.05 
+                        }}
+                        whileHover={!isMobile ? { scale: 1.05 } : {}}
+                        className="rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300"
+                        style={{ 
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          background: hoveredProject === featuredProject.id
+                            ? `${featuredProject.color}20`
+                            : `${featuredProject.color}12`,
+                          color: featuredProject.color,
+                          border: `1px solid ${featuredProject.color}30`,
+                        }}
+                      >
+                        {tag}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right side - Visual element */}
+                <div className="relative hidden md:flex items-center justify-center">
+                  <motion.div
+                    animate={!isMobile ? {
+                      scale: [1, 1.05, 1],
+                      rotate: [0, 5, 0],
+                    } : {}}
+                    transition={!isMobile ? {
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    } : {}}
+                    className="relative"
+                  >
+                    {/* Glowing orb */}
+                    <div 
+                      className="w-64 h-64 rounded-full"
+                      style={{
+                        background: `radial-gradient(circle, ${featuredProject.color}40 0%, ${featuredProject.color}10 50%, transparent 70%)`,
+                        filter: 'blur(40px)',
+                      }}
+                    />
+                    {/* Icon overlay */}
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center text-8xl"
+                      style={{
+                        filter: `drop-shadow(0 0 30px ${featuredProject.color})`,
+                      }}
+                    >
+                      🚀
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Bottom accent line */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute bottom-0 left-0 h-1"
+                  initial={{ width: '0%' }}
+                  animate={{
+                    width: hoveredProject === featuredProject.id ? '100%' : '0%',
+                  }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    background: featuredProject.gradient,
+                    boxShadow: hoveredProject === featuredProject.id ? `0 0 20px ${featuredProject.color}80` : 'none',
+                  }}
+                />
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Projects Grid */}
         <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {projects.map((project, index) => (
             <motion.div
@@ -247,11 +459,11 @@ export default function Projects() {
                 delay: index * 0.08,
                 ease: [0.22, 1, 0.36, 1]
               }}
-              whileHover={!isMobile ? {  // ✅ DISABLED hover on mobile
+              whileHover={!isMobile ? {
                 y: -8,
                 scale: 1.02,
               } : {}}
-              onHoverStart={() => !isMobile && setHoveredProject(project.id)}  // ✅ DISABLED on mobile
+              onHoverStart={() => !isMobile && setHoveredProject(project.id)}
               onHoverEnd={() => !isMobile && setHoveredProject(null)}
               className="group cursor-pointer"
             >
@@ -261,7 +473,7 @@ export default function Projects() {
                   background: hoveredProject === project.id
                     ? 'rgba(25, 25, 35, 0.6)'
                     : 'rgba(20, 20, 30, 0.4)',
-                  backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
+                  backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',
                   border: hoveredProject === project.id
                     ? `1px solid ${project.color}30`
                     : '1px solid rgba(255, 255, 255, 0.05)',
@@ -270,7 +482,7 @@ export default function Projects() {
                     : '0 4px 16px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                {/* ✅ REMOVED: Animated Gradient Background on mobile */}
+                {/* Animated Gradient Background */}
                 {!isMobile && (
                   <motion.div
                     className="absolute inset-0"
@@ -285,7 +497,7 @@ export default function Projects() {
                   />
                 )}
 
-                {/* ✅ REMOVED: Shimmer Effect on mobile */}
+                {/* Shimmer Effect */}
                 {!isMobile && (
                   <motion.div
                     className="absolute inset-0 opacity-0"
@@ -354,7 +566,7 @@ export default function Projects() {
                           duration: 0.3, 
                           delay: index * 0.08 + tagIndex * 0.05 
                         }}
-                        whileHover={!isMobile ? { scale: 1.05 } : {}}  // ✅ DISABLED on mobile
+                        whileHover={!isMobile ? { scale: 1.05 } : {}}
                         className="rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-medium transition-all duration-300"
                         style={{ 
                           fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -373,7 +585,7 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* ✅ REMOVED: Bottom Accent Line on mobile */}
+                {/* Bottom Accent Line */}
                 {!isMobile && (
                   <motion.div
                     className="absolute bottom-0 left-0 h-1"
@@ -389,7 +601,7 @@ export default function Projects() {
                   />
                 )}
 
-                {/* ✅ REMOVED: Corner Accent on mobile */}
+                {/* Corner Accent */}
                 {!isMobile && (
                   <motion.div
                     className="absolute top-0 right-0 w-20 h-20"
@@ -425,7 +637,7 @@ export default function Projects() {
             Every project operates autonomously, pushing the boundaries of what AI can achieve
           </p>
           <motion.button
-            whileHover={!isMobile ? {  // ✅ DISABLED on mobile
+            whileHover={!isMobile ? {
               y: -3, 
               scale: 1.02,
             } : {}}
@@ -434,14 +646,14 @@ export default function Projects() {
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               background: 'linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(155, 93, 229, 0.1) 100%)',
-              backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',  // ✅ REDUCED on mobile
+              backdropFilter: isMobile ? 'blur(10px)' : 'blur(20px)',
               border: '1px solid rgba(0, 229, 255, 0.3)',
               color: '#ffffff',
               boxShadow: '0 4px 24px rgba(0, 229, 255, 0.15)',
               letterSpacing: '0.15em',
             }}
           >
-            {/* ✅ REMOVED: Button shimmer on mobile */}
+            {/* Button shimmer */}
             {!isMobile && (
               <motion.div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100"
@@ -461,7 +673,6 @@ export default function Projects() {
             
             <span className="relative z-10 flex items-center justify-center gap-2">
               Explore All Projects
-              {/* ✅ OPTIMIZED: Arrow animation - simpler on mobile */}
               <motion.span
                 animate={!isMobile ? {
                   x: [0, 4, 0],
@@ -479,7 +690,7 @@ export default function Projects() {
         </motion.div>
       </div>
 
-      {/* ✅ OPTIMIZED: Styles - Only for desktop */}
+      {/* Styles */}
       <style jsx>{`
         @media (prefers-reduced-motion: reduce) {
           * {

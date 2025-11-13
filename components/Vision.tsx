@@ -392,7 +392,7 @@ export default function Vision() {
                   'Cybersecurity that never sleeps',
                   'Research that advances itself',
                   'Code that heals itself',
-                  'Identity that can&apos;t be faked',
+                  'Identity that can not be faked',
                   'Intelligence that serves humanity',
                 ].map((item, index) => (
                   <motion.li

@@ -4,7 +4,8 @@
 
 ### Pioneering Intelligence - Next-Generation AI Technology Parent Company
 
-![The Origin Banner](https://via.placeholder.com/1200x400/0a0a14/00e5ff?text=THE+ORIGIN+-+Autonomous+Intelligence+Systems)
+![The Origin Banner](https://raw.githubusercontent.com/puneetkushwaha/TheOrigin/main/public/origin%20banner.png)
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16.0.1-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
