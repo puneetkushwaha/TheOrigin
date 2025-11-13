@@ -4,7 +4,7 @@
 
 ### Pioneering Intelligence - Next-Generation AI Technology Parent Company
 
-![The Origin Banner](https://raw.githubusercontent.com/username/ai-tech-parent-company/main/public/banner.png)
+![The Origin Banner](https://raw.githubusercontent.com/username/ai-tech-parent-company/main/public/originbanner.png)
 
 
 <p align="center">
