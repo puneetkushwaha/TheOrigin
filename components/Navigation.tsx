@@ -60,6 +60,7 @@ export default function Navigation() {
     { name: 'About', href: '#about' },
     { name: 'Projects', href: '#projects' },
     { name: 'Vision', href: '#vision' },
+    { name: 'Team', href: '#team' },
     { name: 'Contact', href: '#contact' },
   ];
 

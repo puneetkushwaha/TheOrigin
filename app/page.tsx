@@ -9,6 +9,7 @@ import Contact from '@/components/Contact';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CinematicLoader from '@/components/CinematicLoader';
+import Team from '@/components/Team';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,9 @@ export default function Home() {
             </div>
             <div id="vision">
               <Vision />
+            </div>
+            <div id="team">
+              <Team />
             </div>
             <div id="contact">
               <Contact />

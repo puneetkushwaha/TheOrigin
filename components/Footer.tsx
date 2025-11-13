@@ -533,7 +533,7 @@ export default function Footer() {
         color: '#808080',
       }}
     >
-      © {currentYear} The Origin. All rights reserved. • Built with ❤️ By Puneet Kushwaha
+      © {currentYear} The Origin. All rights reserved. • Developed by Puneet Kushwaha
     </p>
   </div>
 </motion.div>
