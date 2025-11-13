@@ -106,3 +106,13 @@ Before you begin, ensure you have the following installed:
 ```bash
 gh repo clone puneetkushwaha/TheOrigin
 cd ai-tech-parent-company
+
+# 🚀 AI Tech Parent Company
+
+## **Step 2: Install Dependencies**
+
+Choose your preferred package manager:
+
+### Using npm:
+```bash
+npm install --legacy-peer-deps
