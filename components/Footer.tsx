@@ -422,7 +422,7 @@ export default function Footer() {
             
             {/* Email */}
             <motion.a
-              href="mailto:contact@theorigin.ai"
+              href="mailto:TheOriginP@outlook.com"
               whileHover={{ x: 5 }}
               className="group inline-flex items-center mb-6 text-sm transition-all"
               style={{
@@ -432,7 +432,7 @@ export default function Footer() {
               }}
             >
               <span className="mr-2" style={{ color: '#00e5ff' }}>📧</span>
-              contact@theorigin.ai
+              TheOriginP@outlook.com
             </motion.a>
 
             {/* Social Links - PREMIUM DESIGN */}

@@ -8,8 +8,12 @@ interface Member {
   name: string;
   role: string;
   bio?: string;
-  avatar?: string;
-  blur?: boolean;
+  avatar: string;
+  blur: boolean;
+  socials?: {
+    type: string;
+    href: string;
+  }[];
 }
 
 const team: Member[] = [
@@ -17,9 +21,15 @@ const team: Member[] = [
     id: 1,
     name: 'Sahil Kumar Sah',
     role: 'Founder & CEO',
-    bio: 'Visionary founder building the AI startup "The Origin".',
-    avatar: '/teams/team.png',
+    bio: 'Visionary founder leading the AI-driven startup "The Origin".',
+    avatar: '/teams/sahil.png',
     blur: false,
+    socials: [
+      {
+        type: 'linkedin',
+        href: 'https://www.linkedin.com/in/sahil-kumar-sah', // actual link
+      },
+    ],
   },
   {
     id: 2,
@@ -43,7 +53,8 @@ export default function Team() {
       id="team"
       className="relative w-full py-12 sm:py-16 md:py-20 px-4"
       style={{
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
+        background:
+          'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
       }}
     >
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -69,7 +80,8 @@ export default function Team() {
           <div
             className="mx-auto h-px w-16 sm:w-20 md:w-24"
             style={{
-              background: 'linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.6), transparent)',
+              background:
+                'linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.6), transparent)',
             }}
           />
           <p className="mt-4 text-sm sm:text-base" style={{ color: '#a0a0a0' }}>
@@ -101,7 +113,8 @@ export default function Team() {
                 <div
                   className="w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+                    background:
+                      'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
                     border: '1px solid rgba(255,255,255,0.04)',
                   }}
                 >
@@ -138,6 +151,34 @@ export default function Team() {
                   >
                     {member.bio}
                   </p>
+                )}
+
+                {/* Social Icons */}
+                {!member.blur && member.socials && (
+                  <div className="flex justify-center gap-3 mt-3">
+                    {member.socials.map((social, i) => (
+                      <a
+                        key={i}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-gray-400 hover:text-[#c084fc] transition-colors"
+                      >
+                        {social.type === 'linkedin' ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            className="w-5 h-5"
+                          >
+                            <path d="M19 0h-14c-2.761...Z" />
+                          </svg>
+                        ) : (
+                          <span>{social.type}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
                 )}
               </div>
             </motion.div>
