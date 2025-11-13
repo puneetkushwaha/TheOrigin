@@ -392,7 +392,7 @@ export default function Contact() {
               {
                 icon: '📧',
                 title: 'Email',
-                value: 'contact@theorigin.ai',
+                value: 'TheOriginP@outlook.com',
                 color: '#00e5ff',
               },
               {
