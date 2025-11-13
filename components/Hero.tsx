@@ -614,7 +614,7 @@ export default function Hero() {
                       backgroundClip: 'text',
                     }}
                   >
-                    Beyond Human Limits — Autonomous AI Innovation
+                    Beyond Human Limits — AI Innovation
                   </span>
                 </motion.p>
 

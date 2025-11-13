@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Linkedin } from 'lucide-react'; // LinkedIn icon
 
 interface Member {
   id: number;
@@ -27,11 +28,11 @@ const team: Member[] = [
     socials: [
       {
         type: 'linkedin',
-        href: 'https://www.linkedin.com/in/sahil-kumar-sah', // actual link
+        href: 'https://www.linkedin.com/in/sahil-kumar-sah-2867b023a/',
       },
     ],
   },
-  {
+   {
     id: 2,
     name: 'Coming Soon',
     role: 'Core Team Member',
@@ -53,8 +54,7 @@ export default function Team() {
       id="team"
       className="relative w-full py-12 sm:py-16 md:py-20 px-4"
       style={{
-        background:
-          'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
+        background: 'linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%)',
       }}
     >
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -80,8 +80,7 @@ export default function Team() {
           <div
             className="mx-auto h-px w-16 sm:w-20 md:w-24"
             style={{
-              background:
-                'linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.6), transparent)',
+              background: 'linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.6), transparent)',
             }}
           />
           <p className="mt-4 text-sm sm:text-base" style={{ color: '#a0a0a0' }}>
@@ -113,12 +112,10 @@ export default function Team() {
                 <div
                   className="w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center"
                   style={{
-                    background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
                     border: '1px solid rgba(255,255,255,0.04)',
                   }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={member.avatar}
                     alt={member.name}
@@ -126,6 +123,7 @@ export default function Team() {
                   />
                 </div>
 
+                {/* Name & Role */}
                 <div>
                   <h3
                     style={{
@@ -144,6 +142,7 @@ export default function Team() {
                   </p>
                 </div>
 
+                {/* Bio */}
                 {!member.blur && member.bio && (
                   <p
                     className="mt-3 text-xs sm:text-sm px-2"
@@ -153,28 +152,23 @@ export default function Team() {
                   </p>
                 )}
 
-                {/* Social Icons */}
+                {/* Socials */}
                 {!member.blur && member.socials && (
-                  <div className="flex justify-center gap-3 mt-3">
-                    {member.socials.map((social, i) => (
+                  <div className="mt-3 flex justify-center gap-3">
+                    {member.socials.map((social) => (
                       <a
-                        key={i}
+                        key={social.type}
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-gray-400 hover:text-[#c084fc] transition-colors"
+                        className="p-2 rounded-full hover:scale-110 transition-transform duration-200"
+                        style={{
+                          background: 'rgba(255,255,255,0.06)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                        }}
                       >
-                        {social.type === 'linkedin' ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            className="w-5 h-5"
-                          >
-                            <path d="M19 0h-14c-2.761...Z" />
-                          </svg>
-                        ) : (
-                          <span>{social.type}</span>
+                        {social.type === 'linkedin' && (
+                          <Linkedin size={18} color="#c084fc" />
                         )}
                       </a>
                     ))}
