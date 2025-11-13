@@ -36,14 +36,14 @@ const team: Member[] = [
     id: 2,
     name: 'Coming Soon',
     role: 'Core Team Member',
-    avatar: '/teams/team.png',
+    avatar: '/teams/sahil.png',
     blur: true,
   },
   {
     id: 3,
     name: 'Coming Soon',
     role: 'Core Team Member',
-    avatar: '/teams/team.png',
+    avatar: '/teams/sahil.png',
     blur: true,
   },
 ];
