@@ -56,7 +56,7 @@ function TechnologicalOrb({ isMobile }: MobileProps) {
     <group ref={groupRef}>
       {/* Sparkles around the orb */}
       <Sparkles 
-        count={isMobile ? 50 : 100}
+        count={isMobile ? 20 : 50}
         scale={orbSize * 3}
         size={2}
         speed={0.2}
@@ -76,11 +76,12 @@ function TechnologicalOrb({ isMobile }: MobileProps) {
 
       {/* Main Technological Sphere */}
       <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-        <Sphere ref={outerSphereRef} args={[orbSize, isMobile ? 128 : 256, isMobile ? 128 : 256]}>
+        <Sphere ref={outerSphereRef} args={[orbSize, isMobile ? 64 : 128, isMobile ? 64 : 128]}>
           <MeshTransmissionMaterial
             backside
-            samples={isMobile ? 16 : 32}
-            resolution={isMobile ? 1024 : 2048}
+  samples={isMobile ? 4 : 8}
+  resolution={isMobile ? 512 : 1024}
+
             transmission={0.95}
             roughness={0.02}
             thickness={3.5}
@@ -278,7 +279,7 @@ function AmbientParticles({ isMobile }: MobileProps) {
 
   // ✅ FIX: Move particleCount calculation inside useMemo
   const geometry = useMemo(() => {
-    const particleCount = isMobile ? 200 : 400;
+    const particleCount = isMobile ? 80 : 200;
     const geo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     
