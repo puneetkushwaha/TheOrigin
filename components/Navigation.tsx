@@ -8,6 +8,18 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [joinUsModalOpen, setJoinUsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // ✅ OPTIMIZED: Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,10 +72,11 @@ export default function Navigation() {
     }
   };
 
+  // ✅ OPTIMIZED: Reduced blur on mobile
   const buttonStyle = {
     fontFamily: 'system-ui, -apple-system, sans-serif',
     background: 'linear-gradient(135deg, rgba(0, 229, 255, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%)',
-    backdropFilter: 'blur(10px)',
+    backdropFilter: isMobile ? 'blur(5px)' : 'blur(10px)',
     border: '1px solid rgba(0, 229, 255, 0.3)',
     color: '#ffffff',
     letterSpacing: '0.15em',
@@ -72,6 +85,7 @@ export default function Navigation() {
 
   return (
     <>
+      {/* ✅ OPTIMIZED: Reduced blur and saturation on mobile */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -81,8 +95,12 @@ export default function Navigation() {
           background: scrolled 
             ? 'rgba(10, 10, 15, 0.85)' 
             : 'rgba(10, 10, 15, 0.3)',
-          backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(10px)',
-          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(10px)',
+          backdropFilter: isMobile 
+            ? (scrolled ? 'blur(10px)' : 'blur(5px)')
+            : (scrolled ? 'blur(20px) saturate(180%)' : 'blur(10px)'),
+          WebkitBackdropFilter: isMobile 
+            ? (scrolled ? 'blur(10px)' : 'blur(5px)')
+            : (scrolled ? 'blur(20px) saturate(180%)' : 'blur(10px)'),
           borderBottom: scrolled 
             ? '1px solid rgba(255, 255, 255, 0.08)' 
             : '1px solid rgba(255, 255, 255, 0.03)',
@@ -219,7 +237,7 @@ export default function Navigation() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            {/* Backdrop */}
+            {/* ✅ OPTIMIZED: Backdrop - Reduced blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -228,11 +246,11 @@ export default function Navigation() {
               className="fixed inset-0 bg-black/60 z-40 md:hidden"
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(4px)',
               }}
             />
 
-            {/* Mobile Menu Panel */}
+            {/* ✅ OPTIMIZED: Mobile Menu Panel - Reduced blur */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -245,7 +263,7 @@ export default function Navigation() {
               className="fixed top-0 right-0 bottom-0 w-full sm:w-80 z-40 md:hidden overflow-y-auto"
               style={{
                 background: 'linear-gradient(180deg, rgba(10, 10, 15, 0.98) 0%, rgba(5, 5, 16, 0.98) 100%)',
-                backdropFilter: 'blur(30px)',
+                backdropFilter: 'blur(15px)',
                 borderLeft: '1px solid rgba(255, 255, 255, 0.08)',
                 boxShadow: '-4px 0 24px rgba(0, 0, 0, 0.3)',
               }}
