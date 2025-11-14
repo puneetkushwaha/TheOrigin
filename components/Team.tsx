@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin } from 'lucide-react'; // LinkedIn icon
+import { Linkedin, Github } from 'lucide-react'; // ✅ GitHub icon added
 
 interface Member {
   id: number;
@@ -22,7 +22,7 @@ const team: Member[] = [
     id: 1,
     name: 'Sahil Kumar Sah',
     role: 'Founder & CEO',
-    bio: 'Visionary founder leading the AI-driven startup "The Origin".',
+    bio: 'Visionary founder leading the AI-driven startup The Origin.',
     avatar: '/teams/sahil.png',
     blur: false,
     socials: [
@@ -30,20 +30,35 @@ const team: Member[] = [
         type: 'linkedin',
         href: 'https://www.linkedin.com/in/sahil-kumar-sah-2867b023a/',
       },
+      {
+        type: 'github',
+        href: 'https://github.com/sahilkumar',
+      }
     ],
   },
-   {
+  {
     id: 2,
-    name: 'Coming Soon',
-    role: 'Core Team Member',
-    avatar: '/teams/sahil.png',
-    blur: true,
+    name: 'Puneet Kushwaha',
+    role: 'Head of Technical Operations',
+    bio: 'Leads all technical operations, system architecture, and engineering execution across The Origin’s AI and web ecosystems.',
+    avatar: '/teams/Puneet.png',
+    blur: false,
+    socials: [
+      {
+        type: 'linkedin',
+        href: 'https://www.linkedin.com/in/puneettkushwaha/',
+      },
+      {
+        type: 'github',
+        href: 'https://github.com/puneettkushwaha',
+      }
+    ],
   },
   {
     id: 3,
     name: 'Coming Soon',
     role: 'Core Team Member',
-    avatar: '/teams/sahil.png',
+    avatar: '/teams/woman.png',
     blur: true,
   },
 ];
@@ -169,6 +184,10 @@ export default function Team() {
                       >
                         {social.type === 'linkedin' && (
                           <Linkedin size={18} color="#c084fc" />
+                        )}
+
+                        {social.type === 'github' && (
+                          <Github size={18} color="#c084fc" />
                         )}
                       </a>
                     ))}
