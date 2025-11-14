@@ -896,7 +896,7 @@ export default function Hero() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
-                      placeholder="+1 (555) 123-4567"
+                      placeholder="+91 1234567890"
                       className="w-full px-4 py-3 rounded-xl text-sm transition-all focus:outline-none"
                       style={{
                         fontFamily: 'system-ui, -apple-system, sans-serif',

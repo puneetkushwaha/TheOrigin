@@ -50,7 +50,7 @@ const team: Member[] = [
       },
       {
         type: 'github',
-        href: 'https://github.com/puneettkushwaha',
+        href: 'https://github.com/puneetkushwaha',
       }
     ],
   },
