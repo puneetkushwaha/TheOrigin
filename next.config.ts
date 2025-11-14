@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable Turbopack if you encounter issues
-  // experimental: {
-  //   turbo: false,
-  // },
+  turbopack: {
+    rootDirectory: __dirname, // ✔ Correct key for Next.js 16
+  },
 };
 
 module.exports = nextConfig;
